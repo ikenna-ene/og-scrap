@@ -320,7 +320,7 @@ async function scrap_predoc () {
         institution: post_Inst,
         contact_email: contactInfo.email,
         application_link: contactInfo.link,
-        post_deadline: post_deadline,     //rolling posts deleted at the end of the scrap year
+        application_deadline: post_deadline,     //rolling posts deleted at the end of the scrap year
         postLink: postL,
         scrap_date: getCurrentDate()
       };
