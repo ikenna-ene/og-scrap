@@ -18,8 +18,8 @@ const server = http.createServer((req, res) => {
         <p><strong>Server Time (Nigerian):</strong> ${serverTime}</p>
         <p><strong>Daily Schedule for OG-Scrap:</strong></p>
         <ul>
-          <li>3:00 AM - Scrape predoc scholarships</li>
-          <li>10:00 AM - Scrape Jobs-Ac PHD scholarships</li>
+          <li>3:00 AM - Scrape sft</li>
+          <li>10:00 AM - Scrape Jobs-Ac</li>
         </ul>
         <p>CXHOW..</strong></p>
       </div>
