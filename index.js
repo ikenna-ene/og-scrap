@@ -1,6 +1,7 @@
 const cron = require("node-cron");
 
 const {base_scraper} = require("./scrapers/scholarships-future/sft-main.js");
+const {sa_base_scraper} = require("./scrapers/scholarships-aid/sa-main.js");
 const {get_jobs_ac_data} = require("./scrapers/jobs-ac/jobs-ac-main.js");
 const {academy} = require("./scrapers/academy-pos/academy-main.js");
 const { getNigerianTime, formatNigerianTime } = require("./utils/dateHelpers.js");
@@ -37,7 +38,7 @@ const server = http.createServer((req, res) => {
 async function setupCronJobs() {
   // 4:00 AM - First scrap of the day
   cron.schedule('0 3 * * *', async () => {
-    console.log('🌅 3:00 AM - Scraping new jobs - predoc..');
+    console.log('🌅 3:00 AM - Scraping new scholar posts from scholarships-future..');
     await base_scraper(); process.exit(1);
   }, {
     scheduled: true,
@@ -46,7 +47,7 @@ async function setupCronJobs() {
 
   //// 10:00 AM - Second scrap of the day
   cron.schedule('0 10 * * *', async () => {
-    console.log('🌅 10:00 AM - Scraping new jobs - jbs-ac..');
+    console.log('🌅 10:00 AM - Scraping new scholar posts from jbs-ac..');
     await get_jobs_ac_data(); process.exit(1);
   }, {
     scheduled: true,
@@ -54,18 +55,26 @@ async function setupCronJobs() {
   });
 
   cron.schedule('0 14 * * *', async () => {
-    console.log('🌅 2:00 PM - Scraping new jobs - academy-main..');
+    console.log('🌅 2:00 PM - Scraping new scholar posts from academy-main..');
     await academy(); process.exit(1);
   }, {
     scheduled: true,
     timezone: "Africa/Lagos"
   });
 
+  cron.schedule('0 18 * * *', async () => {
+    console.log('🌅 6:00 PM - Scraping new scholar posts from scholar-aid..');
+    await sa_base_scraper(); process.exit(1);
+  }, {
+    scheduled: true,
+    timezone: "Africa/Lagos"
+  });
+
   console.log('📅 Daily Schedule:');
-  console.log('   - 4:00 AM: First scrap');
+  console.log('   - 3:00 AM: First scrap');
   console.log('   - 10:00 AM: Second scrap');
   console.log('   - 2:00 PM: Third scrap');
-
+  console.log('   - 6:00 PM: Fourth scrap');
 }
 
 // --- Server Startup and Graceful Shutdown ---
